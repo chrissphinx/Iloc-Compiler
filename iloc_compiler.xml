@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="iloc_compiler" default="all">
+  
+  
+  <property file="iloc_compiler.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.tox/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.ear"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.swc"/>
+    <include name="*.ane"/>
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+  <path id="jdk.classpath.1.8">
+    <fileset dir="${jdk.home.1.8}">
+      <include name="lib/ant-javafx.jar"/>
+      <include name="lib/dt.jar"/>
+      <include name="lib/javafx-mx.jar"/>
+      <include name="lib/jconsole.jar"/>
+      <include name="lib/sa-jdi.jar"/>
+      <include name="lib/tools.jar"/>
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jfr.jar"/>
+      <include name="jre/lib/jfxswt.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+      <include name="jre/lib/ext/cldrdata.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/jfxrt.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/nashorn.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <pathelement location="${javac2.home}/javac2.jar"/>
+    <pathelement location="${javac2.home}/jdom.jar"/>
+    <pathelement location="${javac2.home}/asm-all.jar"/>
+    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module Iloc Compiler -->
+  
+  <dirname property="module.iloc_compiler.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.iloc_compiler" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.iloc_compiler" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.iloc_compiler" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.iloc_compiler" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="iloc_compiler.output.dir" value="${module.iloc_compiler.basedir}/out/production/Iloc Compiler"/>
+  <property name="iloc_compiler.testoutput.dir" value="${module.iloc_compiler.basedir}/out/test/Iloc Compiler"/>
+  
+  <path id="iloc_compiler.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="iloc_compiler.module.production.classpath">
+    <path refid="${module.jdk.classpath.iloc_compiler}"/>
+  </path>
+  
+  <path id="iloc_compiler.runtime.production.module.classpath">
+    <pathelement location="${iloc_compiler.output.dir}"/>
+  </path>
+  
+  <path id="iloc_compiler.module.classpath">
+    <path refid="${module.jdk.classpath.iloc_compiler}"/>
+    <pathelement location="${iloc_compiler.output.dir}"/>
+  </path>
+  
+  <path id="iloc_compiler.runtime.module.classpath">
+    <pathelement location="${iloc_compiler.testoutput.dir}"/>
+    <pathelement location="${iloc_compiler.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.iloc_compiler">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.iloc_compiler">
+    <patternset refid="excluded.from.module.iloc_compiler"/>
+  </patternset>
+  
+  <path id="iloc_compiler.module.sourcepath">
+    <dirset dir="${module.iloc_compiler.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.iloc_compiler" depends="compile.module.iloc_compiler.production,compile.module.iloc_compiler.tests" description="Compile module Iloc Compiler"/>
+  
+  <target name="compile.module.iloc_compiler.production" depends="register.custom.compilers" description="Compile module Iloc Compiler; production classes">
+    <mkdir dir="${iloc_compiler.output.dir}"/>
+    <javac2 destdir="${iloc_compiler.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.iloc_compiler}/javac">
+      <compilerarg line="${compiler.args.iloc_compiler}"/>
+      <bootclasspath refid="iloc_compiler.module.bootclasspath"/>
+      <classpath refid="iloc_compiler.module.production.classpath"/>
+      <src refid="iloc_compiler.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.iloc_compiler"/>
+    </javac2>
+    
+    <copy todir="${iloc_compiler.output.dir}">
+      <fileset dir="${module.iloc_compiler.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.iloc_compiler.tests" depends="register.custom.compilers,compile.module.iloc_compiler.production" description="compile module Iloc Compiler; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.iloc_compiler" description="cleanup module">
+    <delete dir="${iloc_compiler.output.dir}"/>
+    <delete dir="${iloc_compiler.testoutput.dir}"/>
+  </target>
+
+  <target name="clean.module.parser" description="cleanup javacc generated files">
+    <delete>
+      <fileset dir="src/edu/wmich/cs/maccreery/parser">
+        <include name="*.java" />
+      </fileset>
+    </delete>
+  </target>
+
+  <target name="compile.module.parser" description="run javacc">
+    <javacc target="src/edu/wmich/cs/maccreery/parser/ilocGrammar.jj" outputdirectory="src/edu/wmich/cs/maccreery/parser" javacchome="../javacc-6.0" />
+  </target>
+  
+  <target name="init" description="Build initialization">
+  </target>
+  
+  <target name="clean" depends="clean.module.iloc_compiler" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.iloc_compiler" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>
