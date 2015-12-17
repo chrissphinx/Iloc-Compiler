@@ -21,11 +21,17 @@ public class IlocInstruction<T>
     return null;
   }
 
+  public void setSourceRegister1(int r) {}
+
   public VirtualRegisterOperand getSourceRegister2() {
     return null;
   }
 
+  public void setSourceRegister2(int r) {}
+
   public VirtualRegisterOperand getDestinationRegister() {
     return null;
   }
+
+  public void setDestinationRegister(int r) {}
 }

@@ -10,6 +10,10 @@ public class LoadIInstruction extends IlocInstruction
     this.virtReg = virtReg;
   }
 
+  public VirtualRegisterOperand getDestinationRegister() { return this.virtReg; }
+
+  public void setDestinationRegister(int r) { this.virtReg = new VirtualRegisterOperand(r); }
+
   public Integer compile(Object ... args) {
     StringBuilder instructions = (StringBuilder) args[0];
 

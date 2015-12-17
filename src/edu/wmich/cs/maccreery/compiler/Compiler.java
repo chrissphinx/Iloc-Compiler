@@ -13,6 +13,10 @@ public class Compiler
                       + "_main:\n"
                       + "\tpushq\t%rbp\n"
                       + "\tmovq\t%rsp, %rbp\n");
+
+    Allocator allocator = new Allocator(n.getInstructions());
+    allocator.run();
+
     for (IlocInstruction i : n.getInstructions()) {
       i.compile(instructions);
     }

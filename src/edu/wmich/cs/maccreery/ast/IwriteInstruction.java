@@ -1,11 +1,21 @@
 package edu.wmich.cs.maccreery.ast;
 
-/**
- * Created by sphinx on 11/17/15.
- */
 public class IwriteInstruction extends IlocInstruction
 {
+  private VirtualRegisterOperand virtReg;
+
   public IwriteInstruction(VirtualRegisterOperand vr1) {
     super();
+    this.virtReg = vr1;
+  }
+
+  public VirtualRegisterOperand getSourceRegister1() {
+    return this.virtReg;
+  }
+
+  public void setSourceRegister1(int r) { this.virtReg = new VirtualRegisterOperand(r); }
+
+  public Integer compile(Object ... args) {
+    return null;
   }
 }
